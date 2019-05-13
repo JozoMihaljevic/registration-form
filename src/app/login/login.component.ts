@@ -4,8 +4,7 @@ import { Login } from '../shared/login.model';
 
 @Component({
   selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  templateUrl: './login.component.html'
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
@@ -31,7 +30,7 @@ export class LoginComponent implements OnInit {
 
   setForm() {
     const regEmail = '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$';
-    const regPassword = '(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{8,}';
+    const regPassword = /[ !"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]/;
     this.loginForm = this.fb.group({
       email: new FormControl(this.login.email, [Validators.required, Validators.pattern(regEmail)]),
       password: new FormControl(this.login.password, [Validators.required, Validators.pattern(regPassword)])
@@ -41,7 +40,7 @@ export class LoginComponent implements OnInit {
   onInput(event: any) {
     const password = event.target.value;
 
-    if ((/[$@$!%*#?&]/.test(password))) {
+    if ((/[ !"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]/.test(password))) {
       this.specialChar = true;
     } else {
       this.specialChar = false;
